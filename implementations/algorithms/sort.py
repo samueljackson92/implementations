@@ -127,6 +127,11 @@ def shellsort(data):
 
 
 def merge(left, right):
+    """Merge function which combines two lists so that they're in order
+
+    @param left Left hand list to merge
+    @param right Right hand list to merge
+    """
     result = []
 
     while len(left) > 0 or len(right) > 0:
@@ -146,6 +151,10 @@ def merge(left, right):
 
 
 def mergesort(data):
+    """ Implementation of mergesort.
+
+    @param data The data to be sorted.
+    """
     if len(data) <= 1:
         return data
 
