@@ -136,9 +136,11 @@ def merge(left, right):
             else:
                 result.append(right.pop(0))
         elif len(left) > 0:
-            result.append(left.pop(0))
+            result += left
+            return result
         elif len(right) > 0:
-            result.append(right.pop(0))
+            result += right
+            return result
 
     return result
 
