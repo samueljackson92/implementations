@@ -1,50 +1,7 @@
-
-def _swap(data, a, b):
-    """Swap the indicies a and b in the array data
-
-    @param data List to swap elements in
-    @param a First index to swap
-    @param b Second index to swap
-    """
-    temp = data[a]
-    data[a] = data[b]
-    data[b] = temp
-    return data
+from _util import *
 
 
-def _find_pivot(data, left, right):
-    """Find a pivot in the dataset between the two given indicies.
-
-    @param data The list to find the pivot in
-    @param left The lower bound in which to find the pivot
-    @param right The upper bound in which to find the pivot
-    """
-    centre = ((right-left)/2) + left
-    return centre
-
-
-def _partition(data, left, right, pivot_index):
-    """ Parition the data between the bounds given an index to pivot around.
-
-    @param data The list of elements to partition
-    @param left The lower bound to partition between
-    @param right The upper bound to parition between
-    @param pivotIndex The index to pivot about
-    """
-    pivot = data[pivot_index]
-    data = _swap(data, pivot_index, right)
-    storeIndex = left
-
-    for i in range(left, right):
-        if(data[i] <= pivot):
-            data = _swap(data, i, storeIndex)
-            storeIndex = storeIndex + 1
-
-    data = _swap(data, storeIndex, right)
-    return storeIndex
-
-
-def quicksort(data, left=None, right=None):
+def quicksort(data, left=None, right=None, pivot_method='simple'):
     """ In place implementation of quicksort.
 
     @param data The list of elements to sort.
@@ -56,10 +13,10 @@ def quicksort(data, left=None, right=None):
         right = len(data)-1
 
     if left < right:
-        pivotIndex = _find_pivot(data, left, right)
-        pivotIndex = _partition(data, left, right, pivotIndex)
-        data = quicksort(data, left, pivotIndex-1)
-        data = quicksort(data, pivotIndex+1, right)
+        pivot_index = find_pivot(data, left, right)
+        pivot_index = partition(data, left, right, pivot_index)
+        data = quicksort(data, left, pivot_index-1, pivot_method)
+        data = quicksort(data, pivot_index+1, right, pivot_method)
 
     return data
 
@@ -72,7 +29,7 @@ def bubblesort(data):
     for i in range(len(data)):
         for j in range(len(data)-1):
             if (data[j] > data[j+1]):
-                data = _swap(data, j, j+1)
+                data = swap(data, j, j+1)
 
     return data
 
@@ -89,7 +46,7 @@ def shakersort(data):
 
         for i in range(0, n-2):
             if (data[i] > data[i+1]):
-                data = _swap(data, i, i+1)
+                data = swap(data, i, i+1)
                 swapped = True
 
         if not swapped:
@@ -99,7 +56,7 @@ def shakersort(data):
 
         for i in range(n-2, -1, -1):
             if(data[i] > data[i+1]):
-                data = _swap(data, i, i+1)
+                data = swap(data, i, i+1)
                 swapped = True
 
     return data
@@ -118,7 +75,7 @@ def selectionsort(data):
                 min_index = j
 
         if(min_index != i):
-            data = _swap(data, min_index, i)
+            data = swap(data, min_index, i)
 
     return data
 
