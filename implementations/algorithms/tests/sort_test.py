@@ -7,7 +7,12 @@ from implementations.algorithms.sort import *
 class TestSortingAlgorithms(unittest.TestCase):
 
     def setUp(self):
-        self.elements = random.sample(range(100), 10)
+        self.elements = random.sample(range(1000), 100)
+
+    def test_shellsort(self):
+        data = self.elements[:]
+        shellsort(data)
+        self.assertEquals(data, sorted(self.elements))
 
     def test_quicksort(self):
         data = self.elements[:]
@@ -32,6 +37,10 @@ class TestSortingAlgorithms(unittest.TestCase):
     def test_insertionsort(self):
         data = self.elements[:]
         insertionsort(data)
+        self.assertEquals(data, sorted(self.elements))
+
+    def test_mergesort(self):
+        data = mergesort(self.elements)
         self.assertEquals(data, sorted(self.elements))
 
 if __name__ == '__main__':

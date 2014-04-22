@@ -139,3 +139,59 @@ def insertionsort(data):
         data[hole_index] = value_to_insert
 
     return data
+
+
+def generate_gaps():
+    """ Gap generator for shell sort
+
+    This yields sucessively smaller gaps to be used in the sorting strategy for
+    shell sort. This sequence is taken from Ciura, 2001.
+    """
+    gaps = [701, 301, 132, 57, 23, 10, 4, 1]
+    for gap in gaps:
+        yield gap
+
+
+def shellsort(data):
+    """ Implementation of a shell sort
+
+    @param data The list of elements to sort
+    """
+    n = len(data)
+    for gap in generate_gaps():
+        for i in xrange(gap, n):
+            tmp = data[i]
+            j = i
+            while (j >= gap and data[j-gap] > tmp):
+                data[j] = data[j-gap]
+                j -= gap
+
+            data[j] = tmp
+
+
+def merge(left, right):
+    result = []
+
+    while len(left) > 0 or len(right) > 0:
+        if len(left) > 0 and len(right) > 0:
+            if left[0] <= right[0]:
+                result.append(left.pop(0))
+            else:
+                result.append(right.pop(0))
+        elif len(left) > 0:
+            result.append(left.pop(0))
+        elif len(right) > 0:
+            result.append(right.pop(0))
+
+    return result
+
+
+def mergesort(data):
+    if len(data) <= 1:
+        return data
+
+    middle = len(data)/2
+    left = mergesort(data[:middle])
+    right = mergesort(data[middle:])
+
+    return merge(left, right)
